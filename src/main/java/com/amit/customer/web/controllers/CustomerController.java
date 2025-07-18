@@ -119,3 +119,15 @@ public class CustomerController {
 	}
 
 }
+
+
+// AI-Generated Fix: Add Defensive Programming
+// Generated on: 2025-07-18T09:01:11.685Z
+
+// Use Optional to handle null safely
+Optional<CustomerDto> customerOpt = Optional.ofNullable(customerService.getCustomerById(id));
+if (customerOpt.isPresent()) {
+    return new ResponseEntity<>(customerOpt.get(), HttpStatus.OK);
+} else {
+    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+}
