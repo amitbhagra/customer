@@ -25,3 +25,18 @@ public class CustomerConfiguration {
 	}
 
 }
+
+
+// AI-Generated Fix: Add Custom Validation Error Handler
+// Generated on: 2025-07-18T09:57:49.572Z
+
+try {
+    // Validation logic
+    validator.validate(engineDto);
+} catch (ConstraintViolationException e) {
+    Map<String, String> errors = new HashMap<>();
+    e.getConstraintViolations().forEach(violation -> {
+        errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+    });
+    throw new ValidationException("Validation failed", errors);
+}
