@@ -119,3 +119,13 @@ public class CustomerController {
 	}
 
 }
+
+
+// AI-Generated Fix: Initialize customerDto Properly
+// Generated on: 2025-07-18T09:04:16.798Z
+
+// Add proper null handling in service layer
+CustomerDto customerDto = customerService.getCustomerById(id);
+if (customerDto == null) {
+    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+}
