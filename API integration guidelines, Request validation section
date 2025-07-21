@@ -1,0 +1,23 @@
+script
+// Client-side validation before sending request
+function createCustomer(customerData) {
+    // Validate required fields and format
+    if (!customerData.email || typeof customerData.email !== "string") {
+        throw new Error("Email must be a valid string");
+    }
+    
+    // Ensure proper JSON structure
+    const validatedData = {
+        email: customerData.email.trim(),
+        name: customerData.name?.trim() || "",
+        // Add other required fields
+    };
+    
+    return fetch("/api/customers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(validatedData) // Properly stringify
+    });
+}
