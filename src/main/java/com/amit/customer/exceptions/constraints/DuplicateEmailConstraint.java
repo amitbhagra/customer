@@ -1,22 +1,23 @@
-package com.amit.customer.exceptions.constraints;
+// AI-Generated Fix: Add Custom Email Validation with Better Error Response
+// Generated on: 2025-08-25T12:36:32.158Z
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.amit.customer.exceptions.constraints.validators.DuplicateEmailConstraintValidator;
-
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
-
-@Documented
-@Constraint(validatedBy = DuplicateEmailConstraintValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface DuplicateEmailConstraint {
-	String message() default "Duplicate email";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+@Service
+public class CustomerService {
+    
+    public boolean existsByEmail(String email) {
+        return customerRepository.existsByEmail(email);
+    }
+    
+    public Customer createCustomer(CustomerDto customerDto) {
+        // Validate email uniqueness
+        if (existsByEmail(customerDto.getEmail())) {
+            throw new DuplicateEmailException(
+                "Email '" + customerDto.getEmail() + "' is already registered");
+        }
+        
+        // Create customer
+        Customer customer = new Customer();
+        customer.setEmail(customerDto.getEmail());
+        return customerRepository.save(customer);
+    }
 }
